@@ -42,6 +42,7 @@ web-developer-folio/
 
 - **Node.js** (v18 or higher)
 - **npm** or **pnpm**
+- **Backend Server**: This frontend requires the portfolio server to be running. See the [Server REPO](.https://github.com/nagarjun-avala/web-portfolio-server) for setup instructions.
 
 ### Installation
 
