@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Image from 'next/image';
 
 type Props = {
     blog: Blog | null | undefined
@@ -35,11 +36,11 @@ const BlogDetail = ({ blog, onBack }: Props) => {
                         <span className="flex items-center gap-1"><Tag size={14} /> {blog.category}</span>
                     </div>
                     <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight">{blog.title}</h1>
-                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+                    <div className="rounded-2xl relative h-[300px] md:h-[400px] overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
                         {blog.image ? (
-                            <img src={blog.image} alt={blog.title} className="w-full h-full object-cover" />
+                            <Image src={blog.image} alt={blog.title} fill sizes="(max-width: 768px) 100vw, 896px" className="object-cover" />
                         ) : (
-                            <div className="w-full h-64 bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
+                            <div className="w-full h-full bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
                                 <span className="text-slate-400">No Image</span>
                             </div>
                         )}

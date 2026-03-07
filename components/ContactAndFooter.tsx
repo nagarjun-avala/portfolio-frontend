@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { Turnstile } from '@marsidev/react-turnstile';
 
 // Component: Local Time Display
 const LocalTime = () => {
@@ -34,6 +35,7 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
         email: "",
         message: ""
     });
+    const [token, setToken] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -47,14 +49,20 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
             return;
         }
 
+        if (!token) {
+            toast.error("Please explicitly solve the Captcha.");
+            return;
+        }
+
         setIsSubmitting(true);
         try {
-            await api.post("/contact", formData);
+            await api.post("/contact", { ...formData, 'cf-turnstile-response': token });
             toast.success("Message sent successfully!");
             setFormData({ name: "", email: "", message: "" });
-        } catch (error: any) {
+            setToken("");
+        } catch (error: unknown) {
             console.error("Submission error:", error);
-            toast.error(error.message || "Failed to send message. Please try again.");
+            toast.error((error as Error).message || "Failed to send message. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -69,7 +77,7 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
     }
 
     return (
-        <footer id="contact" className="bg-slate-50 dark:bg-slate-950 pt-32 pb-12 border-t border-slate-200 dark:border-slate-900">
+        <footer id="connect" className="bg-slate-50 dark:bg-slate-950 pt-32 pb-12 border-t border-slate-200 dark:border-slate-900 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4">
 
                 {/* Hero CTA & Form Grid */}
@@ -96,9 +104,9 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
 
                     {/* Right: Contact Form */}
                     <div>
-                        <Card className="border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 p-2">
+                        <Card className="border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 py-6 px-4">
                             <CardHeader>
-                                <CardTitle>Send a Message</CardTitle>
+                                <CardTitle className="text-2xl font-bold capitalize">Send a Message</CardTitle>
                                 <CardDescription>Got a project in mind? Let's talk.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -136,10 +144,17 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                                         disabled={isSubmitting}
                                     />
                                 </div>
+                                <div className="py-2">
+                                    <Turnstile 
+                                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"} // Testing keys
+                                        onSuccess={(token) => setToken(token)}
+                                        options={{ theme: 'auto' }}
+                                    />
+                                </div>
                                 <Button
                                     className="w-full font-bold h-12 text-md"
                                     onClick={handleSubmit}
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting || !token}
                                 >
                                     {isSubmitting ? "Sending..." : "Send Message"}
                                 </Button>
@@ -180,7 +195,7 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                         <ul className="space-y-4 text-slate-600 dark:text-slate-500">
                             <li><a href="#hero" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Home</a></li>
                             <li><a href="#work" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Work</a></li>
-                            <li><a href="#about" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">About</a></li>
+                            <li><a href="#profile" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">About</a></li>
                             <li><a href="#blogs" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Writing</a></li>
                         </ul>
                     </div>

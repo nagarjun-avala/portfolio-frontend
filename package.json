@@ -25,7 +25,9 @@
     "build": "next build",
     "start": "next start",
     "pro": "node server.js",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -33,11 +35,14 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.1.1",
+    "@marsidev/react-turnstile": "^1.4.2",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.4",
     "@tabler/icons-react": "^3.34.1",
+    "@vercel/analytics": "^1.6.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.483.0",
     "motion": "^12.23.0",
@@ -56,14 +61,21 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^0.1.0",
+    "@eslint/eslintrc": "^3.3.3",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^5.1.4",
     "eslint": "^10.0.1",
-    "eslint-config-next": "^0.2.4",
+    "eslint-config-next": "^16.1.6",
+    "jsdom": "^28.1.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.56.0",
+    "vitest": "^4.0.18"
   }
 }

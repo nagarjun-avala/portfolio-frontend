@@ -41,6 +41,28 @@ const Navbar = ({ isDetailView }: Props) => {
     ];
 
     useEffect(() => {
+        const handleAnchorClick = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            const anchor = target.closest('a');
+            if (anchor && anchor.hash && anchor.origin === window.location.origin && anchor.getAttribute('href')?.startsWith('#')) {
+                const element = document.querySelector(anchor.hash);
+                if (element) {
+                    e.preventDefault();
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                    });
+                    // Update URL without jump
+                    window.history.pushState(null, '', anchor.hash);
+                }
+            }
+        };
+
+        window.addEventListener('click', handleAnchorClick);
+        return () => window.removeEventListener('click', handleAnchorClick);
+    }, []);
+
+    useEffect(() => {
         const unsubscribe = scrollY.on("change", (latest) => {
             const previous = lastYRef.current;
             // Show navbar if scrolling up or at the top

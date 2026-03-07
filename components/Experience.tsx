@@ -14,14 +14,7 @@ type Props = {
 const ExperienceSection = ({ experience, totalExperiance }: Props) => {
     if (!experience || experience.length === 0) return null;
 
-    // Calculate dynamic years of experience
-    let totalYears = 0;
-    if (experience.length > 0) {
-        const startYears = experience.map(exp => exp.start ? new Date(exp.start).getFullYear() : new Date().getFullYear());
-        const minYear = Math.min(...startYears);
-        const currentYear = new Date().getFullYear();
-        totalYears = currentYear - minYear;
-    }
+
 
     // Sort experience by end date (most recent first)
     const sortedExperience = [...experience].sort((a, b) => {
@@ -37,7 +30,7 @@ const ExperienceSection = ({ experience, totalExperiance }: Props) => {
     };
 
     return (
-        <section id="experience" className="py-32 px-4 max-w-7xl mx-auto">
+        <section id="timeline" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
             <h2 className="mb-16 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Career_Timeline</h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

@@ -33,6 +33,7 @@ export interface About {
     languages: string[]
     experience: AboutExperience;
     skills: string[];
+    resumeUrl?: string;
 }
 
 export interface TechStackItem {

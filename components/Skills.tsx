@@ -14,7 +14,7 @@ const SkillsSection = ({ techStack }: Props) => {
     if (!techStack) return null;
 
     return (
-        <section id="skills" className="py-32 px-4 max-w-7xl mx-auto">
+        <section id="skills" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
             <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Technical Arsenal</motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

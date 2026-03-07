@@ -16,7 +16,7 @@ type Props = {
 const BlogsSection = ({ blogs }: Props) => {
     if (!blogs || blogs.length === 0) return null;
     return (
-        <section id="blogs" className="py-32 px-4 max-w-7xl mx-auto">
+        <section id="blogs" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
             <div className="flex justify-between items-end mb-12">
                 <h2 className="text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Latest_Thoughts</h2>
                 <Button variant="link" className="text-rose-500 dark:text-rose-400" asChild>

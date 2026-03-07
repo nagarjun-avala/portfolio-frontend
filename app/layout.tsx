@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { CommandPalette } from "@/components/CommandPalette";
+import { Analytics } from "@vercel/analytics/react";
+import VisitorTracker from "@/components/VisitorTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,8 +44,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <VisitorTracker />
           <Toaster richColors position="top-right" />
+          <CommandPalette />
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

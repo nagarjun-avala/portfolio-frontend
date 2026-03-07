@@ -10,11 +10,14 @@ import BlogsSection from '@/components/Blogs';
 import Cursor from '@/components/Cursor';
 import Navbar from '@/components/Navbar';
 import { calculateTotalExperience, formatExperience } from '@/lib/utils';
+import { Suspense } from 'react';
 import { MOCK_DATA, PortfolioDataTypes } from '@/lib/data';
 import { Metadata } from 'next';
+import { HeroSkeleton, SectionSkeleton } from '@/components/Skeletons';
 
 // Data Fetching Function
 async function getData(): Promise<PortfolioDataTypes> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let fetchedData: any = null;
 
   try {
@@ -61,6 +64,7 @@ async function getData(): Promise<PortfolioDataTypes> {
   // --- Data Transformation ---
 
   // 1. Transform Dates in Experience
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const experienceTransformed = (fetchedData.experience || []).map((exp: any) => ({
     ...exp,
     start: new Date(exp.start),
@@ -68,6 +72,7 @@ async function getData(): Promise<PortfolioDataTypes> {
   }));
 
   // 2. Transform Dates in Certifications
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const certificationsTransformed = (fetchedData.certifications || []).map((cert: any) => ({
     ...cert,
     issueDate: new Date(cert.issueDate)
@@ -123,7 +128,8 @@ async function getData(): Promise<PortfolioDataTypes> {
       location: fetchedData.about?.location || MOCK_DATA.about.location,
       image: fetchedData.avatar || fetchedData.about?.image || MOCK_DATA.about.image,
       description: fetchedData.about?.description || MOCK_DATA.about.description,
-      skills: fetchedData.about?.skills || MOCK_DATA.about.skills
+      skills: fetchedData.about?.skills || MOCK_DATA.about.skills,
+      resumeUrl: fetchedData.about?.resumeUrl || MOCK_DATA.about.resumeUrl
     },
     techStack: fetchedData.techStack || MOCK_DATA.techStack,
     education: fetchedData.education || MOCK_DATA.education,
@@ -149,26 +155,39 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Home() {
+async function PortfolioContent() {
   const data = await getData();
 
   return (
+    <main>
+      <HeroSection data={data.hero} />
+      <AboutSection data={data.about} />
+      <SkillsSection techStack={data.techStack} />
+      <ProjectsSection projects={data.projects} />
+      <ExperienceSection experience={data.experience} totalExperiance={data.about.experience.display} />
+      <EducationSection education={data.education} />
+      <CertificationsSection certifications={data.certifications} />
+      <BlogsSection blogs={data.blogs} />
+      <ContactAndFooter email={data.meta.email} phone={data.meta.phone} name={data.name} socials={data.socials} />
+    </main>
+  );
+}
+
+export default function Home() {
+  return (
     <div className={`min-h-screen selection:bg-rose-500/30 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300`}>
       <Cursor />
-
       <Navbar isDetailView={false} />
 
-      <main>
-        <HeroSection data={data.hero} />
-        <AboutSection data={data.about} />
-        <SkillsSection techStack={data.techStack} />
-        <ProjectsSection projects={data.projects} />
-        <ExperienceSection experience={data.experience} totalExperiance={data.about.experience.display} />
-        <EducationSection education={data.education} />
-        <CertificationsSection certifications={data.certifications} />
-        <BlogsSection blogs={data.blogs} />
-        <ContactAndFooter email={data.meta.email} phone={data.meta.phone} name={data.name} socials={data.socials} />
-      </main>
+      <Suspense fallback={
+        <main>
+          <HeroSkeleton />
+          <SectionSkeleton />
+          <SectionSkeleton />
+        </main>
+      }>
+        <PortfolioContent />
+      </Suspense>
     </div>
   );
 }

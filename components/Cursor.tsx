@@ -3,9 +3,7 @@ import { motion } from 'framer-motion'
 import { useMotionValue, useSpring } from 'motion/react';
 import { useEffect } from 'react'
 
-type Props = {}
-
-const Cursor = (props: Props) => {
+const Cursor = () => {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 

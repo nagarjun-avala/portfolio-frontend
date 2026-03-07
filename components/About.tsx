@@ -2,9 +2,11 @@
 import { motion } from 'framer-motion';
 import { About } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowUpRight, Code, Cpu, Globe, Layers, MapPin } from 'lucide-react';
+import { ArrowUpRight, Code, Cpu, Download, Globe, Layers, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-
+import { Button } from './ui/button';
+import Link from 'next/link';
+import Image from 'next/image';
 type Props = {
     data: About & {
         languages: string[]
@@ -14,7 +16,7 @@ type Props = {
 const AboutSection = ({ data }: Props) => {
     if (!data) return null;
     return (
-        <section id="about" className="py-32 px-4 max-w-7xl mx-auto">
+        <section id="profile" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
             <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
         // Profile
             </motion.h2>
@@ -23,17 +25,33 @@ const AboutSection = ({ data }: Props) => {
 
                 {/* 1. Bio Box (Row 1, Span 2) */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-2">
-                    <Card className="h-full border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex flex-col justify-center">
-                        <CardHeader>
-                            <CardTitle className="text-3xl mb-2">{data.title}</CardTitle>
-                            <CardDescription className="text-lg leading-relaxed">{data.description}</CardDescription>
+                    <Card className="h-full border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex flex-col overflow-hidden">
+                        <CardHeader className="pb-2">
+                            <CardTitle className="text-3xl">{data.title}</CardTitle>
                         </CardHeader>
+                        <CardContent className="flex-1 overflow-hidden">
+                            <div className="h-full overflow-y-auto pr-2 custom-scrollbar">
+                                <CardDescription className="text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+                                    {data.description}
+                                </CardDescription>
+                            </div>
+                        </CardContent>
                     </Card>
                 </motion.div>
 
                 {/* 2. Image Box (Row 1, Span 1) */}
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="md:col-span-1 rounded-xl overflow-hidden relative group border border-slate-200 dark:border-slate-800">
-                    <img src={data.image} alt="Profile" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                    <Image src={data.image} alt="Profile" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                    {data.resumeUrl && (
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-6">
+                            <Button variant="outline" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-all gap-2" asChild>
+                                <Link href={data.resumeUrl} target="_blank" rel="noopener noreferrer">
+                                    <Download size={18} />
+                                    Resume
+                                </Link>
+                            </Button>
+                        </div>
+                    )}
                 </motion.div>
 
                 {/* 3. Focus Box (Row 1, Span 1) - Restored from previous turn */}

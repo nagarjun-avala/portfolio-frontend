@@ -48,7 +48,8 @@ export const MOCK_DATA: PortfolioDataTypes = {
             display: "2+ Years",
             displaySuffix: "Years"
         },
-        "skills": ["JavaScript", "React.js", "Next.js", "Node.js", "AWS", "Docker", "Kubernetes", "TypeScript", "SQL", "C++"]
+        "skills": ["JavaScript", "React.js", "Next.js", "Node.js", "AWS", "Docker", "Kubernetes", "TypeScript", "SQL", "C++"],
+        resumeUrl: "/Nagarjun_Avala_Resume.pdf"
     },
     "techStack": [
         { category: "Languages", items: ["JavaScript", "TypeScript", "C++", "Python", "SQL", "HTML5", "CSS3"] },
