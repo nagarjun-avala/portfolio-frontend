@@ -1,5 +1,6 @@
 import { Project } from '@/lib/types'
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Button } from './ui/button'
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react'
 import { Badge } from './ui/badge'
@@ -46,8 +47,8 @@ const ProjectDetail = ({ project, onBack, onNavigate, prevProject, nextProject }
                 </div>
 
                 {/* Hero Image */}
-                <div className="rounded-2xl overflow-hidden aspect-video border border-slate-200 dark:border-slate-800 shadow-2xl">
-                    <img src={project.img} alt={project.title} className="w-full h-full object-cover" />
+                <div className="rounded-2xl relative overflow-hidden aspect-video border border-slate-200 dark:border-slate-800 shadow-2xl">
+                    <Image src={project.img} alt={project.title} fill sizes="100vw" className="object-cover" />
                 </div>
             </motion.div>
 
@@ -111,8 +112,8 @@ const ProjectDetail = ({ project, onBack, onNavigate, prevProject, nextProject }
                             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Gallery</h3>
                             <div className="grid grid-cols-1 gap-6">
                                 {project.gallery.map((img, i) => (
-                                    <div key={i} className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800">
-                                        <img src={img} alt={`Gallery ${i + 1}`} className="w-full h-auto object-cover" />
+                                    <div key={i} className="rounded-xl relative aspect-video overflow-hidden border border-slate-200 dark:border-slate-800">
+                                        <Image src={img} alt={`Gallery ${i + 1}`} fill sizes="(max-width: 1024px) 100vw, 66vw" className="object-cover" />
                                     </div>
                                 ))}
                             </div>
@@ -122,7 +123,14 @@ const ProjectDetail = ({ project, onBack, onNavigate, prevProject, nextProject }
             </div>
 
             {/* Next Project Nav */}
-            <div className="mt-32 pt-12 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+            <div className="mt-32 pt-12 border-t border-slate-200 dark:border-slate-800 flex justify-between">
+                {prevProject ? (
+                    <Button variant="ghost" size="lg" className="text-xl gap-4 hover:bg-transparent hover:text-rose-500" onClick={() => onNavigate(prevProject.slug)}>
+                        <ArrowLeft /> Previous Project
+                    </Button>
+                ) : (
+                    <div />
+                )}
                 {nextProject ? (
                     <Button variant="ghost" size="lg" className="text-xl gap-4 hover:bg-transparent hover:text-rose-500" onClick={() => onNavigate(nextProject.slug)}>
                         Next Project <ArrowRight />

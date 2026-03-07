@@ -25,7 +25,7 @@ export const HeroSection = ({ data }: Props) => {
     if (!data) return null;
 
     return (
-        <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
+        <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 scroll-mt-24">
             {/* Background Mesh */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-[-10%] left-[-10%] w-125 h-125 bg-rose-400/20 dark:bg-rose-500/10 blur-[120px] rounded-full animate-pulse" />
@@ -71,7 +71,7 @@ export const HeroSection = ({ data }: Props) => {
                         </Link>
                     </Button>
                     <Button size="lg" variant="outline" className="rounded-full text-base" asChild>
-                        <a href={data.ctaSecondaryLink || "#contact"}>{data.ctaSecondary}</a>
+                        <a href={data.ctaSecondaryLink || "#connect"}>{data.ctaSecondary}</a>
                     </Button>
                 </motion.div>
             </div>

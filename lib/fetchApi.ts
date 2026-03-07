@@ -3,7 +3,7 @@ type FetchOptions = RequestInit & {
 };
 
 const BASE_URL = (() => {
-    let url = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "http://localhost:5000/api";
+    const url = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ?? "http://localhost:5000/api";
     if (typeof window === 'undefined' && url.startsWith('/')) {
         return "http://localhost:5000/api";
     }
@@ -60,13 +60,13 @@ export const api = {
     get: <T>(endpoint: string, options?: FetchOptions) =>
         fetcher<T>(endpoint, { ...options, method: "GET" }),
 
-    post: <T>(endpoint: string, body: any, options?: FetchOptions) =>
+    post: <T>(endpoint: string, body: unknown, options?: FetchOptions) =>
         fetcher<T>(endpoint, { ...options, method: "POST", body: JSON.stringify(body) }),
 
-    put: <T>(endpoint: string, body: any, options?: FetchOptions) =>
+    put: <T>(endpoint: string, body: unknown, options?: FetchOptions) =>
         fetcher<T>(endpoint, { ...options, method: "PUT", body: JSON.stringify(body) }),
 
-    patch: <T>(endpoint: string, body: any, options?: FetchOptions) =>
+    patch: <T>(endpoint: string, body: unknown, options?: FetchOptions) =>
         fetcher<T>(endpoint, { ...options, method: "PATCH", body: JSON.stringify(body) }),
 
     delete: <T>(endpoint: string, options?: FetchOptions) =>
