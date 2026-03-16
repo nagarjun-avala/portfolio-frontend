@@ -5,10 +5,31 @@ import { Hero } from '@/lib/types'
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Magnetic from '@/components/Magnetic';
 
 type Props = {
     data: Hero
 }
+
+// Staggered character animation for hero title words
+const WordReveal = ({ text, className }: { text: string; className?: string }) => {
+    const words = text.split(" ");
+    return (
+        <span className={className} aria-label={text}>
+            {words.map((word, i) => (
+                <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 40, skewY: 3 }}
+                    animate={{ opacity: 1, y: 0, skewY: 0 }}
+                    transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    className="inline-block mr-[0.25em]"
+                >
+                    {word}
+                </motion.span>
+            ))}
+        </span>
+    );
+};
 
 export const HeroSection = ({ data }: Props) => {
 
@@ -33,14 +54,14 @@ export const HeroSection = ({ data }: Props) => {
             </div>
 
             <div className="relative z-10 text-center">
-                <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                     <Badge variant="secondary" className="mb-6 py-1.5 px-4 text-sm">
                         {data.badge}
                     </Badge>
                 </motion.div>
 
-                <h1 className="text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-[1.1] text-slate-900 dark:text-slate-100">
-                    <span className="block">{data.titlePrefix}</span>
+                <h1 className="text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-[1.1] text-slate-900 dark:text-slate-100 overflow-hidden">
+                    <WordReveal text={data.titlePrefix} className="block" />
                     <div className="h-[1.1em] overflow-hidden relative text-rose-500 dark:text-rose-400">
                         <AnimatePresence mode='wait'>
                             <motion.span
@@ -55,24 +76,39 @@ export const HeroSection = ({ data }: Props) => {
                             </motion.span>
                         </AnimatePresence>
                     </div>
-                    <span className="block text-transparent bg-clip-text bg-linear-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-600 text-4xl md:text-6xl mt-2">
-                        {data.titleSuffix}
-                    </span>
+                    <WordReveal
+                        text={data.titleSuffix}
+                        className="block text-transparent bg-clip-text bg-linear-to-b from-slate-900 to-slate-500 dark:from-white dark:to-slate-600 text-4xl md:text-6xl mt-2"
+                    />
                 </h1>
 
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="mt-8 text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                    className="mt-8 text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-lg mx-auto"
+                >
                     {data.description}
                 </motion.p>
 
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="mt-12 flex justify-center gap-4">
-                    <Button size="lg" className="rounded-full text-base font-bold shadow-lg shadow-rose-500/20" asChild>
-                        <Link href={data.ctaPrimaryLink || "#work"}>
-                            {data.ctaPrimary}
-                        </Link>
-                    </Button>
-                    <Button size="lg" variant="outline" className="rounded-full text-base" asChild>
-                        <a href={data.ctaSecondaryLink || "#connect"}>{data.ctaSecondary}</a>
-                    </Button>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="mt-12 flex justify-center gap-4"
+                >
+                    <Magnetic>
+                        <Button size="lg" className="rounded-full text-base font-bold shadow-lg shadow-rose-500/20" asChild>
+                            <Link href={data.ctaPrimaryLink || "#work"} aria-label={data.ctaPrimary}>
+                                {data.ctaPrimary}
+                            </Link>
+                        </Button>
+                    </Magnetic>
+                    <Magnetic>
+                        <Button size="lg" variant="outline" className="rounded-full text-base" asChild>
+                            <a href={data.ctaSecondaryLink || "#connect"} aria-label={data.ctaSecondary}>{data.ctaSecondary}</a>
+                        </Button>
+                    </Magnetic>
                 </motion.div>
             </div>
         </section>

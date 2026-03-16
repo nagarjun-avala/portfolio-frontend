@@ -26,6 +26,7 @@
     "start": "next start",
     "pro": "node server.js",
     "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "test": "vitest run",
     "test:ui": "vitest --ui"
   },
@@ -38,6 +39,7 @@
     "@marsidev/react-turnstile": "^1.4.2",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.4",
+    "@studio-freight/lenis": "^1.0.42",
     "@tabler/icons-react": "^3.34.1",
     "@vercel/analytics": "^1.6.1",
     "class-variance-authority": "^0.7.1",
@@ -53,6 +55,7 @@
     "react-hook-form": "^7.60.0",
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
+    "react-parallax-tilt": "^1.7.320",
     "remark-gfm": "^4.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.0.2",
