@@ -25,6 +25,7 @@ const SkillsSection = ({ techStack }: Props) => {
     return (
         <section id="skills" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
             <motion.h2
+                aria-label="Technical Arsenal"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400"

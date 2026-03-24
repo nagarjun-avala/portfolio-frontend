@@ -1,9 +1,10 @@
 "use client"
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useMotionValue, useSpring } from 'motion/react';
 import { useEffect, useState } from 'react'
 
 const Cursor = () => {
+    const shouldReduceMotion = useReducedMotion();
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
     const [isKeyboard, setIsKeyboard] = useState(false);
@@ -43,6 +44,7 @@ const Cursor = () => {
         };
     }, [mouseX, mouseY]);
 
+    if (shouldReduceMotion) return null;
     if (isKeyboard) return null;
 
     return (

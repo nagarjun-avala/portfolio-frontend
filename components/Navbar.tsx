@@ -69,8 +69,8 @@ const Navbar = ({ isDetailView }: Props) => {
             // Show navbar if scrolling up or at the top
             if (latest < previous || latest < 50) {
                 setIsVisible(true);
-            } else if (latest > previous && latest < 50) {
-                // Hide navbar if scrolling down
+            } else if (latest > previous && latest > 50) {
+                // Hide navbar if scrolling down past 50px
                 setIsVisible(false);
                 setIsMobileMenuOpen(false); // Close menu on hide
             }

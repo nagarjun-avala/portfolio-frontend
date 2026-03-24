@@ -60,7 +60,7 @@ export const HeroSection = ({ data }: Props) => {
                     </Badge>
                 </motion.div>
 
-                <h1 className="text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-[1.1] text-slate-900 dark:text-slate-100 overflow-hidden">
+                <h1 className="font-(--font-syne) text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-[1.1] text-slate-900 dark:text-slate-100 overflow-hidden">
                     <WordReveal text={data.titlePrefix} className="block" />
                     <div className="h-[1.1em] overflow-hidden relative text-rose-500 dark:text-rose-400">
                         <AnimatePresence mode='wait'>

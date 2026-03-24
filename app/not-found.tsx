@@ -5,14 +5,17 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Home, Search } from "lucide-react";
+import { BookOpen, Home, Rocket, Search } from "lucide-react";
 import { useEffect } from "react";
 
 export default function NotFoundPage() {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            // Don't fire shortcuts when user is typing in an input
+            const tag = (e.target as HTMLElement).tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
             if (e.key.toLowerCase() === 'h') window.location.href = '/';
-            if (e.key.toLowerCase() === 'b') window.location.href = '/blog';
+            if (e.key.toLowerCase() === 'b') window.location.href = '/blogs';
             if (e.key.toLowerCase() === 'p') window.location.href = '/projects';
         };
         window.addEventListener("keydown", handleKeyDown);
@@ -21,7 +24,7 @@ export default function NotFoundPage() {
 
     return (
         <motion.section
-            className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 bg-gradient-to-b from-black via-black/80 to-gray-900"
+            className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 bg-linear-to-b from-black via-black/80 to-gray-900"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
@@ -32,7 +35,7 @@ export default function NotFoundPage() {
             ></div>
 
             <motion.h1
-                className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-pink-500 drop-shadow-lg"
+                className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-purple-400 via-cyan-400 to-pink-500 drop-shadow-lg"
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 120 }}
@@ -52,10 +55,11 @@ export default function NotFoundPage() {
                 onSubmit={(e) => e.preventDefault()}
             >
                 <div className="flex items-center bg-white/10 backdrop-blur rounded-xl overflow-hidden">
-                    <Search className="ml-3 text-gray-400" size={18} />
+                    <Search className="ml-3 text-gray-400" size={18} aria-hidden="true" />
                     <input
                         type="text"
                         placeholder="Search blog or projects..."
+                        aria-label="Search blog or projects"
                         className="w-full px-3 py-2 bg-transparent text-white placeholder-gray-400 focus:outline-none"
                     />
                 </div>
@@ -81,10 +85,10 @@ export default function NotFoundPage() {
                         </motion.span>
                     </Button>
                 </Link>
-                <Link href="/blog">
+                <Link href="/blogs">
                     <Button variant="outline" className="relative overflow-hidden flex items-center gap-2 text-cyan-400 border-cyan-400 group">
                         <span className="absolute inset-0 w-full h-full bg-cyan-200 opacity-0 transition-opacity group-active:opacity-10 rounded-full"></span>
-                        📚 Visit Blog
+                        <BookOpen size={16} aria-hidden="true" /> Visit Blog
                         <motion.span
                             className="ml-2 text-xs text-cyan-200 bg-cyan-800/30 px-2 py-1 rounded opacity-0 group-hover:opacity-100"
                             initial={{ opacity: 0, y: -5 }}
@@ -98,7 +102,7 @@ export default function NotFoundPage() {
                 <Link href="/projects">
                     <Button variant="outline" className="relative overflow-hidden flex items-center gap-2 text-pink-400 border-pink-400 group">
                         <span className="absolute inset-0 w-full h-full bg-pink-200 opacity-0 transition-opacity group-active:opacity-10 rounded-full"></span>
-                        🚀 View Projects
+                        <Rocket size={16} aria-hidden="true" /> View Projects
                         <motion.span
                             className="ml-2 text-xs text-pink-200 bg-pink-800/30 px-2 py-1 rounded opacity-0 group-hover:opacity-100"
                             initial={{ opacity: 0, y: -5 }}

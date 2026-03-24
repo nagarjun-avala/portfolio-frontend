@@ -1,3 +1,4 @@
+"use client"
 import { Project } from '@/lib/types'
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -25,7 +26,7 @@ const ProjectDetail = ({ project, onBack, onNavigate, prevProject, nextProject }
     return (
         <div className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
             {/* Nav Back */}
-            <button onClick={onBack} className="flex items-center gap-2 text-slate-500 hover:text-rose-500 transition-colors mb-8 group">
+            <button onClick={onBack} aria-label="Back to all projects" className="flex items-center gap-2 text-slate-500 hover:text-rose-500 transition-colors mb-8 group cursor-pointer">
                 <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                 <span className="text-sm font-bold uppercase tracking-wider">Back to Work</span>
             </button>

@@ -12,7 +12,7 @@ const CertificationsSection = ({ certifications }: Props) => {
     if (!certifications || certifications.length === 0) return null;
     return (
         <section id="certifications" className="py-20 px-4 max-w-7xl mx-auto border-t border-slate-200 dark:border-slate-800">
-            <h2 className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Certs & Achievements</h2>
+            <h2 aria-label="Certifications and Achievements" className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Certs &amp; Achievements</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {certifications.map((cert) => (
                     <div key={cert.id} className="flex flex-col gap-4 p-6 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/30 dark:bg-slate-900/30">
