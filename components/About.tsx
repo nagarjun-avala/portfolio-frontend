@@ -17,11 +17,11 @@ const AboutSection = ({ data }: Props) => {
     if (!data) return null;
     return (
         <section id="profile" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
-            <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            <motion.h2 aria-label="Profile" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
         // Profile
             </motion.h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-150">
+            <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:min-h-150">
 
                 {/* 1. Bio Box (Row 1, Span 2) */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-2">
@@ -41,7 +41,7 @@ const AboutSection = ({ data }: Props) => {
 
                 {/* 2. Image Box (Row 1, Span 1) */}
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="md:col-span-1 rounded-xl overflow-hidden relative group border border-slate-200 dark:border-slate-800">
-                    <Image src={data.image} alt="Profile" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                    <Image src={data.image} alt="Profile photo" fill priority sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
                     {data.resumeUrl && (
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-6">
                             <Button variant="outline" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-all gap-2" asChild>
@@ -56,7 +56,7 @@ const AboutSection = ({ data }: Props) => {
 
                 {/* 3. Focus Box (Row 1, Span 1) - Restored from previous turn */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="md:col-span-1">
-                    <Card className="h-full border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex flex-col justify-between">
+                    <Card className="h-full border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex flex-col justify-between cursor-pointer">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-xl font-bold">Focus</CardTitle>
                             <ArrowUpRight size={20} className="text-rose-500 dark:text-rose-400" />

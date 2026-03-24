@@ -27,6 +27,9 @@ export function CommandPalette() {
         e.preventDefault();
         setOpen((open) => !open);
       }
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
     };
 
     document.addEventListener("keydown", down);
@@ -49,7 +52,7 @@ export function CommandPalette() {
       />
 
       {/* Dialog */}
-      <div className="relative z-50 w-full max-w-lg overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-950 sm:w-[600px]">
+      <div role="dialog" aria-modal="true" aria-label="Command palette" className="relative z-50 w-full max-w-lg overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-950 sm:w-[600px]">
         <Command
           className="flex h-full w-full flex-col bg-transparent"
           shouldFilter={true}
@@ -67,9 +70,9 @@ export function CommandPalette() {
               No results found.
             </Command.Empty>
             
-            <Command.Group heading="Navigation" className="text-xs font-medium text-slate-500 dark:text-slate-400 [&_[cmdk-item]]:mt-1">
+            <Command.Group heading="Navigation" className="text-xs font-medium text-slate-500 dark:text-slate-400 **:[[cmdk-item]]:mt-1">
               <Command.Item
-                className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2.5 text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:text-slate-50 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2.5 text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:text-slate-50 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50 data-disabled:pointer-events-none data-disabled:opacity-50"
                 onSelect={() => runCommand(() => window.location.href = '/')}
               >
                 <Home className="mr-2 h-4 w-4" />
@@ -77,14 +80,14 @@ export function CommandPalette() {
               </Command.Item>
               <Command.Item
                 className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2.5 text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:text-slate-50 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50"
-                onSelect={() => runCommand(() => window.location.href = '/#projects')}
+                onSelect={() => runCommand(() => window.location.href = '/#work')}
               >
                 <FolderDot className="mr-2 h-4 w-4" />
                 Projects
               </Command.Item>
               <Command.Item
                 className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2.5 text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:text-slate-50 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50"
-                onSelect={() => runCommand(() => window.location.href = '/#experience')}
+                onSelect={() => runCommand(() => window.location.href = '/#timeline')}
               >
                 <Laptop className="mr-2 h-4 w-4" />
                 Experience

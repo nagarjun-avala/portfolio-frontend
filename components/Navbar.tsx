@@ -6,6 +6,7 @@ import { AnimatePresence } from "motion/react";
 import { motion, useScroll } from "framer-motion";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import Magnetic from "@/components/Magnetic";
 
 type Props = {
     isDetailView: boolean;
@@ -68,8 +69,8 @@ const Navbar = ({ isDetailView }: Props) => {
             // Show navbar if scrolling up or at the top
             if (latest < previous || latest < 50) {
                 setIsVisible(true);
-            } else if (latest > previous && latest < 50) {
-                // Hide navbar if scrolling down
+            } else if (latest > previous && latest > 50) {
+                // Hide navbar if scrolling down past 50px
                 setIsVisible(false);
                 setIsMobileMenuOpen(false); // Close menu on hide
             }
@@ -137,14 +138,17 @@ const Navbar = ({ isDetailView }: Props) => {
                     {/* Desktop: Horizontal Links */}
                     <div className="hidden md:flex items-center gap-1 overflow-x-auto max-w-[90vw] no-scrollbar">
                         {navItems.map((item) => (
-                            <Button key={item} variant="ghost" size="sm" asChild>
-                                <a
-                                    href={`#${item.toLowerCase() === "index" ? "hero" : item.toLowerCase()
-                                        }`}
-                                >
-                                    {item}
-                                </a>
-                            </Button>
+                            <Magnetic key={item} strength={0.2}>
+                                <Button variant="ghost" size="sm" asChild>
+                                    <a
+                                        href={`#${item.toLowerCase() === "index" ? "hero" : item.toLowerCase()
+                                            }`}
+                                        aria-label={`Navigate to ${item} section`}
+                                    >
+                                        {item}
+                                    </a>
+                                </Button>
+                            </Magnetic>
                         ))}
                     </div>
 

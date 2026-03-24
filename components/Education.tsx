@@ -11,7 +11,7 @@ const EducationSection = ({ education }: Props) => {
     if (!education || education.length === 0) return null;
     return (
         <section id="education" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
-            <h2 className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Education</h2>
+            <h2 aria-label="Education" className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Education</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {education.map((edu) => (
                     <Card key={edu.id} className="border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50">

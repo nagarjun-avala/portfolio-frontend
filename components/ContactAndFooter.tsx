@@ -84,7 +84,7 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
                     {/* Left: CTA */}
                     <div className="flex flex-col justify-center text-center lg:text-left">
-                        <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
+                        <h2 className="font-(--font-syne) text-5xl md:text-7xl lg:text-8xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
                             Let's build <br />
                             <span className="text-transparent bg-clip-text bg-linear-to-r from-rose-500 to-purple-600 dark:from-rose-400 dark:to-purple-500">something epic.</span>
                         </h2>
@@ -112,8 +112,9 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                             <CardContent className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Name</label>
+                                        <label htmlFor="contact-name" className="text-sm font-medium text-slate-700 dark:text-slate-200">Name</label>
                                         <Input
+                                            id="contact-name"
                                             name="name"
                                             placeholder="John Doe"
                                             value={formData.name}
@@ -122,8 +123,9 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Email</label>
+                                        <label htmlFor="contact-email" className="text-sm font-medium text-slate-700 dark:text-slate-200">Email</label>
                                         <Input
+                                            id="contact-email"
                                             name="email"
                                             placeholder="john@example.com"
                                             type="email"
@@ -134,8 +136,9 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-200">Message</label>
+                                    <label htmlFor="contact-message" className="text-sm font-medium text-slate-700 dark:text-slate-200">Message</label>
                                     <Textarea
+                                        id="contact-message"
                                         name="message"
                                         placeholder="Tell me about your project..."
                                         className="min-h-37.5"
@@ -145,8 +148,8 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                                     />
                                 </div>
                                 <div className="py-2">
-                                    <Turnstile 
-                                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"} // Testing keys
+                                    <Turnstile
+                                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE || "1x00000000000000000000AA"} // Testing keys
                                         onSuccess={(token) => setToken(token)}
                                         options={{ theme: 'auto' }}
                                     />
@@ -214,8 +217,9 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                         <h4 className="text-slate-900 dark:text-slate-300 font-bold mb-6">Newsletter</h4>
                         <p className="text-slate-600 dark:text-slate-500 text-sm mb-4">Subscribe for latest updates.</p>
                         <div className="flex gap-2">
-                            <Input placeholder="Email address" className="bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800" />
-                            <Button variant="default" size="icon" className="shrink-0"><ArrowRight className="w-4 h-4" /></Button>
+                            <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
+                            <Input id="newsletter-email" aria-label="Newsletter email address" placeholder="Email address" className="bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800" />
+                            <Button variant="default" size="icon" className="shrink-0" aria-label="Subscribe to newsletter"><ArrowRight className="w-4 h-4" /></Button>
                         </div>
                     </div>
                 </div>

@@ -31,7 +31,7 @@ const ExperienceSection = ({ experience, totalExperiance }: Props) => {
 
     return (
         <section id="timeline" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
-            <h2 className="mb-16 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Career_Timeline</h2>
+            <h2 aria-label="Career Timeline" className="mb-16 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Career_Timeline</h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 {/* Left Column: Timeline */}
