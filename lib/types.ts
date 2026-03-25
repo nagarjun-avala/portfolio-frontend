@@ -306,8 +306,8 @@ export interface Experience {
     order?: number;
 
     // Basic Role Information (Legacy fields)
-    start: Date | string;
-    end: Date | string | "present" | null;
+    startDate: Date | string;
+    endDate: Date | string | "present" | null;
     role: string;
     company: string;
     desc: string;

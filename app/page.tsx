@@ -65,8 +65,8 @@ const getData = unstable_cache(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const experienceTransformed = (fetchedData.experience || []).map((exp: any) => ({
       ...exp,
-      start: new Date(exp.start),
-      end: exp.end ? new Date(exp.end) : "present"
+      startDate: new Date(exp.startDate),
+      endDate: exp.endDate ? new Date(exp.endDate) : "present"
     }));
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -192,7 +192,7 @@ async function BelowFold() {
     <>
       <SkillsSection techStack={data.techStack} />
       <ProjectsSection projects={data.projects} />
-      <ExperienceSection experience={data.experience} totalExperiance={data.about.experience.display} />
+      <ExperienceSection experience={data.experience} totalExperience={data.about.experience.display} />
       <EducationSection education={data.education} />
       <CertificationsSection certifications={data.certifications} />
       <BlogsSection blogs={data.blogs} />

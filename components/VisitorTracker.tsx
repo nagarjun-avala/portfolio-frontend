@@ -9,7 +9,8 @@ import { useEffect } from "react";
  */
 export default function VisitorTracker() {
   useEffect(() => {
-    const SESSION_KEY = "visitor_tracked";
+    const currentPath = window.location.pathname || "/";
+    const SESSION_KEY = `visitor_tracked_${currentPath}`;
     try {
       if (sessionStorage.getItem(SESSION_KEY)) return;
 

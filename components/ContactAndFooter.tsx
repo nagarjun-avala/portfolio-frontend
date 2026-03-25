@@ -1,6 +1,7 @@
 "use client"
-import { ArrowRight, ArrowUpRight, Github, Linkedin, Phone, Terminal, Twitter } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Github, Linkedin, Phone, Terminal, Twitter, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { api } from "@/lib/fetchApi";
 import { Button } from "./ui/button";
@@ -29,7 +30,7 @@ const LocalTime = () => {
 // Combined Contact & Footer (Mega Footer)
 import { Social } from "@/lib/types";
 
-export const ContactAndFooter = ({ email, name, phone, socials }: { email: string, name: string, phone: string | undefined, socials?: Social[] }) => {
+export const ContactAndFooter = ({ email, name, phone, socials, location }: { email: string, name: string, phone: string | undefined, socials?: Social[], location?: string }) => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -37,10 +38,17 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
     });
     const [token, setToken] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [newsletterEmail, setNewsletterEmail] = useState("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleNewsletterSubmit = () => {
+        if (!newsletterEmail) return;
+        toast.success("Thanks for subscribing! (Demo only)");
+        setNewsletterEmail("");
     };
 
     const handleSubmit = async () => {
@@ -61,7 +69,6 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
             setFormData({ name: "", email: "", message: "" });
             setToken("");
         } catch (error: unknown) {
-            console.error("Submission error:", error);
             toast.error((error as Error).message || "Failed to send message. Please try again.");
         } finally {
             setIsSubmitting(false);
@@ -84,7 +91,7 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
                     {/* Left: CTA */}
                     <div className="flex flex-col justify-center text-center lg:text-left">
-                        <h2 className="font-(--font-syne) text-5xl md:text-7xl lg:text-8xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
+                        <h2 className="font-(--font-syne) text-5xl md:text-7xl lg:text-8xl text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
                             Let's build <br />
                             <span className="text-transparent bg-clip-text bg-linear-to-r from-rose-500 to-purple-600 dark:from-rose-400 dark:to-purple-500">something epic.</span>
                         </h2>
@@ -148,16 +155,23 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                                     />
                                 </div>
                                 <div className="py-2">
+                                {process.env.NEXT_PUBLIC_TURNSTILE_SITE && (
                                     <Turnstile
-                                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE || "1x00000000000000000000AA"} // Testing keys
+                                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE}
                                         onSuccess={(token) => setToken(token)}
                                         options={{ theme: 'auto' }}
                                     />
+                                )}
+                                {!process.env.NEXT_PUBLIC_TURNSTILE_SITE && (
+                                    <div className="text-xs text-orange-500 bg-orange-100 dark:bg-orange-900/30 p-2 rounded">
+                                        Captcha disabled (No Site Key). Form submission will work without explicit captcha.
+                                    </div>
+                                )}
                                 </div>
                                 <Button
                                     className="w-full font-bold h-12 text-md"
                                     onClick={handleSubmit}
-                                    disabled={isSubmitting || !token}
+                                    disabled={isSubmitting || (!!process.env.NEXT_PUBLIC_TURNSTILE_SITE && !token)}
                                 >
                                     {isSubmitting ? "Sending..." : "Send Message"}
                                 </Button>
@@ -173,7 +187,8 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                             <Terminal className="text-rose-500" /> {name}
                         </h3>
                         <p className="text-slate-600 dark:text-slate-500 leading-relaxed mb-6">
-                            Crafting digital experiences with code and creative design. Based in the Cloud.
+                            Crafting digital experiences with code and creative design.
+                            {location && <span className="mt-2 flex items-center gap-1"><MapPin size={14} /> Based in {location}</span>}
                         </p>
                         <div className="flex gap-4">
                             {socials && socials.map((social) => (
@@ -196,10 +211,11 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                     <div>
                         <h4 className="text-slate-900 dark:text-slate-300 font-bold mb-6">Sitemap</h4>
                         <ul className="space-y-4 text-slate-600 dark:text-slate-500">
-                            <li><a href="#hero" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Home</a></li>
-                            <li><a href="#work" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Work</a></li>
-                            <li><a href="#profile" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">About</a></li>
-                            <li><a href="#blogs" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Writing</a></li>
+                            <li><Link href="/#hero" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Home</Link></li>
+                            <li><Link href="/projects" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Projects</Link></li>
+                            <li><Link href="/blogs" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Writing</Link></li>
+                            <li><Link href="/uses" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Uses (My Setup)</Link></li>
+                            <li><Link href="/contact" className="hover:text-rose-500 dark:hover:text-rose-400 transition-colors">Contact</Link></li>
                         </ul>
                     </div>
 
@@ -218,8 +234,8 @@ export const ContactAndFooter = ({ email, name, phone, socials }: { email: strin
                         <p className="text-slate-600 dark:text-slate-500 text-sm mb-4">Subscribe for latest updates.</p>
                         <div className="flex gap-2">
                             <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
-                            <Input id="newsletter-email" aria-label="Newsletter email address" placeholder="Email address" className="bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800" />
-                            <Button variant="default" size="icon" className="shrink-0" aria-label="Subscribe to newsletter"><ArrowRight className="w-4 h-4" /></Button>
+                            <Input id="newsletter-email" aria-label="Newsletter email address" placeholder="Email address" className="bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800" value={newsletterEmail} onChange={e => setNewsletterEmail(e.target.value)} />
+                            <Button onClick={handleNewsletterSubmit} variant="default" size="icon" className="shrink-0" aria-label="Subscribe to newsletter"><ArrowRight className="w-4 h-4" /></Button>
                         </div>
                     </div>
                 </div>

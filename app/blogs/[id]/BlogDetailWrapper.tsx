@@ -10,7 +10,13 @@ export default function BlogDetailWrapper({ blog }: { blog: Blog }) {
     return (
         <BlogDetail
             blog={blog}
-            onBack={() => router.push('/#blogs')}
+            onBack={() => {
+                if (window.history.length > 2) {
+                    router.back();
+                } else {
+                    router.push('/blogs');
+                }
+            }}
         />
     );
 }

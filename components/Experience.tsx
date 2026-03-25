@@ -8,18 +8,18 @@ import { Code, Globe } from 'lucide-react';
 
 type Props = {
     experience: Experience[]
-    totalExperiance: string
+    totalExperience: string
 }
 
-const ExperienceSection = ({ experience, totalExperiance }: Props) => {
+const ExperienceSection = ({ experience, totalExperience }: Props) => {
     if (!experience || experience.length === 0) return null;
 
 
 
     // Sort experience by end date (most recent first)
     const sortedExperience = [...experience].sort((a, b) => {
-        const dateA = (!a.end || a.end === "present") ? new Date() : new Date(a.end);
-        const dateB = (!b.end || b.end === "present") ? new Date() : new Date(b.end);
+        const dateA = (!a.endDate || a.endDate === "present") ? new Date() : new Date(a.endDate);
+        const dateB = (!b.endDate || b.endDate === "present") ? new Date() : new Date(b.endDate);
         return dateB.getTime() - dateA.getTime();
     });
 
@@ -37,7 +37,7 @@ const ExperienceSection = ({ experience, totalExperiance }: Props) => {
                 {/* Left Column: Timeline */}
                 <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-3 md:ml-0 space-y-12">
                     {sortedExperience.map((exp, i) => {
-                        const isActive = exp.end === "present";
+                        const isActive = exp.endDate === "present";
 
                         return (
                             <motion.div
@@ -51,7 +51,7 @@ const ExperienceSection = ({ experience, totalExperiance }: Props) => {
                                 <div className={`absolute -left-2.25 top-0 w-4 h-4 rounded-full border-2 transition-all ${isActive ? 'bg-rose-500 border-rose-500 dark:shadow-[0_0_15px_rgba(244,63,94,0.6)]' : 'bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-600'}`} />
 
                                 <Badge variant={isActive ? "default" : "secondary"} className="mb-2 font-mono">
-                                    {`${formatDate(exp.start)} - ${formatDate(exp.end)}`}
+                                    {`${formatDate(exp.startDate)} - ${formatDate(exp.endDate)}`}
                                 </Badge>
 
                                 <h3 className={`text-2xl font-bold ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-200'}`}>{exp.role}</h3>
@@ -74,26 +74,15 @@ const ExperienceSection = ({ experience, totalExperiance }: Props) => {
                                 <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
                                         <span className="text-slate-500 dark:text-slate-400">Total Experience</span>
-                                        <span className="font-bold text-slate-900 dark:text-white">{totalExperiance}</span>
+                                        <span className="font-bold text-slate-900 dark:text-white">{totalExperience}</span>
                                     </div>
                                     <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                         <motion.div
                                             initial={{ width: 0 }}
-                                            whileInView={{ width: "85%" }}
+                                            whileInView={{ width: "100%" }}
                                             transition={{ duration: 1, delay: 0.5 }}
                                             className="h-full bg-rose-500"
                                         />
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-                                        <span className="block text-2xl font-bold text-slate-900 dark:text-white mb-1">5+</span>
-                                        <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">Projects</span>
-                                    </div>
-                                    <div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-                                        <span className="block text-2xl font-bold text-slate-900 dark:text-white mb-1">1</span>
-                                        <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide">Client</span>
                                     </div>
                                 </div>
 

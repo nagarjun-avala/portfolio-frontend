@@ -5,8 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { ArrowUpRight, Code, Cpu, Download, Globe, Layers, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from './ui/button';
-import Link from 'next/link';
 import Image from 'next/image';
+
 type Props = {
     data: About & {
         languages: string[]
@@ -40,15 +40,21 @@ const AboutSection = ({ data }: Props) => {
                 </motion.div>
 
                 {/* 2. Image Box (Row 1, Span 1) */}
-                <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="md:col-span-1 rounded-xl overflow-hidden relative group border border-slate-200 dark:border-slate-800">
-                    <Image src={data.image} alt="Profile photo" fill priority sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="md:col-span-1 rounded-xl overflow-hidden relative group border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+                    {data.image ? (
+                        <Image src={data.image} alt="Profile photo" fill priority sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                    ) : (
+                        <div className="flex items-center justify-center h-full opacity-50 grayscale">
+                            <Layers size={48} className="text-slate-400" />
+                        </div>
+                    )}
                     {data.resumeUrl && (
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-6">
                             <Button variant="outline" className="rounded-full border-white text-white hover:bg-white hover:text-black transition-all gap-2" asChild>
-                                <Link href={data.resumeUrl} target="_blank" rel="noopener noreferrer">
+                                <a href={data.resumeUrl} target="_blank" rel="noopener noreferrer">
                                     <Download size={18} />
                                     Resume
-                                </Link>
+                                </a>
                             </Button>
                         </div>
                     )}
@@ -95,8 +101,8 @@ const AboutSection = ({ data }: Props) => {
                             <div className="space-y-2">
                                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Languages</p>
                                 <div className="flex flex-wrap gap-2">
-                                    {data.languages && data.languages.map(lang => (
-                                        <Badge key={lang} variant="secondary" className="text-xs">{lang.split(' ')[0]}</Badge>
+                                    {data.languages && data.languages.map((lang, idx) => (
+                                        <Badge key={`${lang}-${idx}`} variant="secondary" className="text-xs">{lang.split(' ')[0]}</Badge>
                                     ))}
                                 </div>
                             </div>
@@ -112,7 +118,7 @@ const AboutSection = ({ data }: Props) => {
                                 <span className="text-8xl font-bold text-slate-900 dark:text-white leading-none">{data.experience.years > 0 ? data.experience.years : data.experience.months}{data.experience.sign}</span>
                                 <Globe size={48} className="text-slate-400 opacity-50" />
                             </div>
-                            <span className="text-xl text-slate-500 dark:text-slate-400 block font-medium uppercase tracking-widest">{data.experience.displaySuffix} {data.experience.label}</span>
+                            <span className="text-xl text-slate-500 dark:text-slate-400 block font-medium uppercase tracking-widest">{data.experience.label}</span>
                         </CardContent>
                     </Card>
                 </motion.div>
@@ -125,8 +131,8 @@ const AboutSection = ({ data }: Props) => {
                         </CardHeader>
                         <CardContent className="flex flex-wrap gap-2">
                             {/* Show a subset of skills for the summary */}
-                            {data.skills && data.skills.slice(0, 8).map((tech) => (
-                                <Badge key={tech} variant="secondary" className="px-3 py-1 text-sm cursor-default hover:bg-rose-100 dark:hover:bg-rose-500/20 hover:text-rose-600 dark:hover:text-rose-300 transition-colors">
+                            {data.skills && data.skills.slice(0, 8).map((tech, idx) => (
+                                <Badge key={`${tech}-${idx}`} variant="secondary" className="px-3 py-1 text-sm cursor-default hover:bg-rose-100 dark:hover:bg-rose-500/20 hover:text-rose-600 dark:hover:text-rose-300 transition-colors">
                                     {tech}
                                 </Badge>
                             ))}

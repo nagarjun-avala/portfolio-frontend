@@ -10,13 +10,15 @@ type Props = {
     techStack: TechStack
 }
 
-const categoryIconMap: Record<string, React.ReactNode> = {
-    "Languages": <Code size={18} className="text-rose-500" />,
-    "Frontend": <Layers size={18} className="text-rose-500" />,
-    "Backend": <Cpu size={18} className="text-rose-500" />,
-    "DevOps & Cloud": <Cloud size={18} className="text-rose-500" />,
-    "Databases": <Database size={18} className="text-rose-500" />,
-    "Tools": <Terminal size={18} className="text-rose-500" />,
+const getCategoryIcon = (category: string) => {
+    const c = (category || "").toLowerCase();
+    if (c.includes("lang")) return <Code size={18} className="text-rose-500" />;
+    if (c.includes("front")) return <Layers size={18} className="text-rose-500" />;
+    if (c.includes("back") || c.includes("api")) return <Cpu size={18} className="text-rose-500" />;
+    if (c.includes("cloud") || c.includes("devops")) return <Cloud size={18} className="text-rose-500" />;
+    if (c.includes("data") || c.includes("base")) return <Database size={18} className="text-rose-500" />;
+    if (c.includes("tool")) return <Terminal size={18} className="text-rose-500" />;
+    return <Code size={18} className="text-rose-500" />; // fallback
 };
 
 const SkillsSection = ({ techStack }: Props) => {
@@ -48,7 +50,7 @@ const SkillsSection = ({ techStack }: Props) => {
 
                             <CardHeader className="pb-3">
                                 <CardTitle className="text-lg flex items-center gap-2">
-                                    {categoryIconMap[stackItem.category] ?? null}
+                                    {getCategoryIcon(stackItem.category)}
                                     {stackItem.category}
                                 </CardTitle>
                             </CardHeader>

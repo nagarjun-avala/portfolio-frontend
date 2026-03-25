@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import { Project } from '@/lib/types';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Tilt from 'react-parallax-tilt';
+import { Button } from '@/components/ui/button';
 
 type Props = {
     projects: Project[]
@@ -16,7 +17,12 @@ const ProjectsSection = ({ projects }: Props) => {
     if (!projects || projects.length === 0) return null;
     return (
         <section id="work" className="py-32 px-4 max-w-7xl mx-auto scroll-mt-24">
-            <h2 aria-label="Selected Works" className="mb-10 text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Selected_Works</h2>
+        <div className="flex justify-between items-end mb-10">
+                <h2 aria-label="Selected Works" className="text-sm uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">// Selected_Works</h2>
+                <Button variant="link" className="text-rose-500 dark:text-rose-400" asChild>
+                    <Link href="/projects">View all projects <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                </Button>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {projects.map((project, i) => (
                     <motion.div

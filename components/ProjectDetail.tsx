@@ -3,7 +3,7 @@ import { Project } from '@/lib/types'
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Button } from './ui/button'
-import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ExternalLink, Github } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { useEffect } from 'react';
 
@@ -38,18 +38,33 @@ const ProjectDetail = ({ project, onBack, onNavigate, prevProject, nextProject }
                         <Badge variant="secondary" className="mb-4">{project.cat}</Badge>
                         <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white">{project.title}</h1>
                     </div>
-                    {project.liveLink && (
-                        <Button size="lg" className="rounded-full gap-2" asChild>
-                            <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                                Visit Live Site <ExternalLink size={18} />
-                            </a>
-                        </Button>
-                    )}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                        {project.liveLink && (
+                            <Button size="lg" className="rounded-full gap-2" asChild>
+                                <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                                    Visit Live Site <ExternalLink size={18} />
+                                </a>
+                            </Button>
+                        )}
+                        {project.githubUrl && (
+                            <Button size="lg" variant="outline" className="rounded-full gap-2 border-slate-300 dark:border-slate-700" asChild>
+                                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                                    <Github size={18} /> Source Code
+                                </a>
+                            </Button>
+                        )}
+                    </div>
                 </div>
 
                 {/* Hero Image */}
-                <div className="rounded-2xl relative overflow-hidden aspect-video border border-slate-200 dark:border-slate-800 shadow-2xl">
-                    <Image src={project.img} alt={project.title} fill sizes="100vw" className="object-cover" />
+                <div className="rounded-2xl relative overflow-hidden aspect-video border border-slate-200 dark:border-slate-800 shadow-2xl bg-slate-100 dark:bg-slate-900">
+                    {project.img ? (
+                        <Image src={project.img} alt={project.title} fill sizes="100vw" className="object-cover" />
+                    ) : (
+                        <div className="flex items-center justify-center h-full">
+                            <span className="text-slate-400 font-medium tracking-wider uppercase text-sm">Project Showcase</span>
+                        </div>
+                    )}
                 </div>
             </motion.div>
 
@@ -113,8 +128,10 @@ const ProjectDetail = ({ project, onBack, onNavigate, prevProject, nextProject }
                             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Gallery</h3>
                             <div className="grid grid-cols-1 gap-6">
                                 {project.gallery.map((img, i) => (
-                                    <div key={i} className="rounded-xl relative aspect-video overflow-hidden border border-slate-200 dark:border-slate-800">
-                                        <Image src={img} alt={`Gallery ${i + 1}`} fill sizes="(max-width: 1024px) 100vw, 66vw" className="object-cover" />
+                                    <div key={i} className="rounded-xl relative aspect-video overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+                                        {img && (
+                                            <Image src={img} alt={`Gallery ${i + 1}`} fill sizes="(max-width: 1024px) 100vw, 66vw" className="object-cover" />
+                                        )}
                                     </div>
                                 ))}
                             </div>

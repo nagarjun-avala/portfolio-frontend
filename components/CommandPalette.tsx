@@ -7,13 +7,14 @@ import {
   FolderDot,
   Home,
   Laptop,
-  Mail,
   Moon,
   PenTool,
   Search,
   Sun,
   GraduationCap,
   Award,
+  Wrench,
+  Phone,
 } from "lucide-react";
 
 export function CommandPalette() {
@@ -115,16 +116,23 @@ export function CommandPalette() {
               </Command.Item>
               <Command.Item
                 className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2.5 text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:text-slate-50 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50"
-                onSelect={() => runCommand(() => window.location.href = '/#contact')}
+                onSelect={() => runCommand(() => window.location.href = '/uses')}
               >
-                <Mail className="mr-2 h-4 w-4" />
+                <Wrench className="mr-2 h-4 w-4" />
+                Uses / My Setup
+              </Command.Item>
+              <Command.Item
+                className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2.5 text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:text-slate-50 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50"
+                onSelect={() => runCommand(() => window.location.href = '/contact')}
+              >
+                <Phone className="mr-2 h-4 w-4" />
                 Contact
               </Command.Item>
             </Command.Group>
 
             <Command.Separator className="my-2 h-px bg-slate-200 dark:bg-slate-800" />
 
-            <Command.Group heading="Theme" className="text-xs font-medium text-slate-500 dark:text-slate-400 [&_[cmdk-item]]:mt-1">
+            <Command.Group heading="Theme" className="text-xs font-medium text-slate-500 dark:text-slate-400 **:[[cmdk-item]]:mt-1">
               <Command.Item
                 className="relative flex cursor-default select-none items-center rounded-sm px-2 py-2.5 text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:text-slate-50 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50"
                 onSelect={() => runCommand(() => setTheme("light"))}
