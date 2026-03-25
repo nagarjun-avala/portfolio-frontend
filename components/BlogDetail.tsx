@@ -31,8 +31,18 @@ const BlogDetail = ({ blog, onBack }: Props) => {
             <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <header className="mb-10 text-center">
                     <div className="flex justify-center gap-4 mb-6 text-sm text-slate-500 dark:text-slate-400 font-medium">
-                        <span className="flex items-center gap-1"><Calendar size={14} /> {blog.date}</span>
-                        <span className="flex items-center gap-1"><Clock size={14} /> {blog.readTime}</span>
+                        <span className="flex items-center gap-1">
+                            <Calendar size={14} />
+                            {blog.publishedAt
+                                ? new Date(blog.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                                : (blog as unknown as Record<string, string>)['date'] ?? ''}
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <Clock size={14} />
+                            {blog.readingTime
+                                ? `${blog.readingTime} min read`
+                                : (blog as unknown as Record<string, string>)['readTime'] ?? ''}
+                        </span>
                         <span className="flex items-center gap-1"><Tag size={14} /> {blog.category}</span>
                     </div>
                     <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight">{blog.title}</h1>

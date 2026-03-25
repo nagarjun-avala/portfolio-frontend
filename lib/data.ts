@@ -93,7 +93,7 @@ export const MOCK_DATA: PortfolioDataTypes = {
             "id": "1",
             "name": "Introduction to Data Analytics",
             "organization": "IBM",
-            issueDate: new Date("2023-05-01"),
+            issueDate: "2023-05-01T00:00:00.000Z",
             credentialID: "NEM77ESNJQMW",
             credentialURL: "https://coursera.org/share/9515b89761bbfad3592a481e1d6d9c0f",
         },
@@ -101,7 +101,7 @@ export const MOCK_DATA: PortfolioDataTypes = {
             "id": "2",
             "name": "Recognition for EdTech Innovation",
             "organization": "Wadhwani Foundation",
-            issueDate: new Date("2023-12-01"),
+            issueDate: "2023-12-01T00:00:00.000Z",
             "credentialID": "WF-REC-2023",
             "credentialURL": "https://buildaccelerator2023.s3.us-west-1.amazonaws.com/Build+Accelerator+-+LinkedIn.png",
         },
@@ -147,24 +147,24 @@ export const MOCK_DATA: PortfolioDataTypes = {
     "experience": [
         {
             "id": "1",
-            "start": new Date("2022-01-01"),
-            "end": new Date("2024-01-01"),
+            "startDate": "2022-01-01T00:00:00.000Z",
+            "endDate": "2024-01-01T00:00:00.000Z",
             "role": "Chief Technology Officer & Web Developer",
             "company": "Learnyte.com",
             "desc": "Architected full-stack EdTech platform (5000+ users). Established DevOps pipeline with CI/CD (GitHub Actions) & Docker."
         },
         {
             "id": "2",
-            "start": new Date("2023-10-01"),
-            "end": new Date("2023-12-01"),
+            "startDate": "2023-10-01T00:00:00.000Z",
+            "endDate": "2023-12-01T00:00:00.000Z",
             "role": "Technical Entrepreneur",
             "company": "AWS Build Accelerator",
             "desc": "Developed cloud-native EdTech solution using AWS (EC2, S3, Lambda). Implemented serverless architecture reducing costs by 45%."
         },
         {
             "id": "3",
-            "start": new Date("2023-02-01"),
-            "end": new Date("2023-05-01"),
+            "startDate": "2023-02-01T00:00:00.000Z",
+            "endDate": "2023-05-01T00:00:00.000Z",
             "role": "Technical Entrepreneur",
             "company": "J HUB Idea Accelerator",
             "desc": "Led product lifecycle from ideation to MVP. Built interactive prototype achieving 85% positive user feedback."

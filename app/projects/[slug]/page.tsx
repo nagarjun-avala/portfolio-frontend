@@ -63,11 +63,26 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         );
     }
 
-    // Determine Prev/Next project from MOCK_DATA for navigational continuity
-    // (Ideally this should come from API, but for now we mix)
-    const index = MOCK_DATA.projects.findIndex(p => p.slug === slug);
-    const prevProject = index > 0 ? MOCK_DATA.projects[index - 1] : null;
-    const nextProject = index < MOCK_DATA.projects.length - 1 ? MOCK_DATA.projects[index + 1] : null;
+    // Determine Prev/Next project dynamically. 
+    // Usually handled by passing an array, but here we'll fetch full profile to establish siblings
+    let allProjects = MOCK_DATA.projects;
+    try {
+        let apiUri = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api";
+        if (apiUri.startsWith('/')) apiUri = "http://localhost:5000/api";
+        const profileRes = await fetch(`${apiUri}/portfolio/profile`, { next: { revalidate: 60 } });
+        if (profileRes.ok) {
+            const profileJson = await profileRes.json();
+            if (profileJson.success && profileJson.data?.projects?.length > 0) {
+                allProjects = profileJson.data.projects;
+            }
+        }
+    } catch {
+        // Fallback to MOCK_DATA
+    }
+
+    const index = allProjects.findIndex(p => p.slug === slug);
+    const prevProject = index > 0 ? allProjects[index - 1] : null;
+    const nextProject = index !== -1 && index < allProjects.length - 1 ? allProjects[index + 1] : null;
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">

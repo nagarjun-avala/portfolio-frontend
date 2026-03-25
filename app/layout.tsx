@@ -41,6 +41,33 @@ export default function RootLayout({
           name="google-site-verification"
           content="8P0bEplteluIGRQDHpdlco0PBnSGR1qOW-O0kY_4uRo"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+             __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Nagarjun Avala",
+              "url": "https://nagarjunavala.com/",
+              "jobTitle": "Full Stack Web Developer & DevOps Engineer",
+              "sameAs": [
+                "https://github.com/navaops",
+                "https://www.linkedin.com/in/nagarjun-avala-23910b2b8/"
+              ]
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+             __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Nagarjun Avala | Portfolio",
+              "url": "https://nagarjunavala.com/"
+            })
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} antialiased`}
